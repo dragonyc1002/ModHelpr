@@ -1,65 +1,43 @@
-const https = require('https');
+const axios = require('axios');
 
 const { bot } = require('../../config');
+const { cmdGuilds } = require('../data/constants');
 
-clear(bot.token);
+clear(bot.token, cmdGuilds[0]); 
 
 async function clear(token, guild) {
   const { id } = await getDataByToken(token);
   const data = JSON.stringify([]);
-  const path = guild
-    ? `/api/v10/applications/${id}/guilds/${guild}/commands`
-    : `/api/v10/applications/${id}/commands`;
+  const baseurl = `https://discord.com/api/v10/applications/${id}`;
+  const requrl = guild
+    ? `${baseurl}/guilds/${guild}/commands`
+    : `${baseurl}/commands`;
 
-  const req = https.request({
-    protocol: 'https:',
-    hostname: 'discord.com',
-    path: path,
-    method: 'PUT',
+  await axios.put(requrl, data, {
     headers: {
       "Content-Type": "application/json",
       "Content-Length": Buffer.byteLength(data),
       Authorization: `Bot ${token}`
     }
-  }, res => {
-    let r = '';
+  }).then((res) => {
+    if (res.status !== 200) {
+      console.error(JSON.parse(res.data));
+      throw new Error('Failed to clear commands.');
+    }
 
-    res.on('data', (chunk) => {
-        r += chunk;
-    });
-
-    res.once('end', () => {
-      if (res.statusCode !== 200) {
-        console.error(JSON.parse(r));
-        throw new Error('Failed to clear commands.');
-      }
-
-      console.log('Commands has been cleared.')
-      console.log('Guild id:' + guild);
-    });
+    console.log('✅| Successfully cleared application commands.\nℹ️| Guild ID: ' + guild);
   });
-
-  req.write(data);
-  req.end();
 }
 
 function getDataByToken(token) {
   return new Promise((resolve, reject) => {
-    https.get('https://discord.com/api/v10/users/@me', {
+    axios.get('https://discord.com/api/v10/users/@me', {
       headers: {
         Authorization: `Bot ${token}`
       }
-    }, res => {
-      let data = '';
-
-      res.on('data', chunk => {
-        data += chunk;
-      });
-
-      res.once('end', () => {
-        if (res.statusCode !== 200) return reject(JSON.parse(data));
-        resolve(JSON.parse(data))
-      });
+    }).then((res) => {
+      if (res.status !== 200) return reject(JSON.parse(res.data));
+      resolve(res.data);
     });
   });
 }
