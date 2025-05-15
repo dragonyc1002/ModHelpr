@@ -3,8 +3,7 @@ const { Routes } = require('discord-api-types/v10');
 
 const fs = require('fs');
 
-const { cmdGuilds } = require('../data/constants');
-const { bot } = require('../../config');
+const { bot, cmdGuilds } = require('../../config');
 
 const { token, id } = bot;
 
