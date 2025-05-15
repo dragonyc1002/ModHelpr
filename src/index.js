@@ -1,7 +1,7 @@
-const { Client, Collection, GatewayIntentBits, Partials } = require('discord.js'); // importing djs classes
-const fs = require('fs'); // importing fs for reading directories
+const { Client, Collection, GatewayIntentBits, Partials } = require('discord.js');
+const fs = require('fs');
 
-const { bot } = require('../config'); // importing bot config for starting the bot
+const { bot } = require('../config');
 
 const client = new Client({
   intents: [
