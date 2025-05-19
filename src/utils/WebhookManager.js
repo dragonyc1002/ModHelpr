@@ -1,15 +1,7 @@
 const { WebhookClient } = require('discord.js');
+const { botloggerprops, modloggerprops } = require('../../config');
 
-const { logger } = require('../../config');
+const botlogger = new WebhookClient(botloggerprops);
+const modlogger = new WebhookClient(modloggerprops);
 
-const { id, token } = logger;
-
-// Webhook used to log moderative actions
-const modActionLogger = new WebhookClient({
-  id: id,
-  token: token
-});
-
-module.exports = {
-  modActionLogger
-}
+module.exports = { botlogger, modlogger }
