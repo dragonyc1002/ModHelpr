@@ -4,27 +4,27 @@ const path = require('path');
 const ms = require('ms');
 const modlogsPath = path.join(__dirname, '../data/modlogs.json');
 
-const modlogs = new SlashCommandBuilder()
+const modlogscmd = new SlashCommandBuilder()
   .setName('modlogs')
-  .setDescription('Shows one\'s modlogs')
+  .setDescription('Shows a user\'s modlogs')
   .addUserOption(option =>
     option.setName('user')
-      .setDescription('The target user, either ID or the user tag is applicable')
+      .setDescription('The target user to lookup modlogs')
       .setRequired(true)
   )
-  .setDefaultMemberPermissions(PermissionFlagsBits.BanMembers);
+  .setDefaultMemberPermissions(PermissionFlagsBits.ModerateMembers);
 
 module.exports = {
-  data: modlogs,
+  data: modlogscmd,
 
   async execute(interaction) {
     await interaction.deferReply();
 
-    const id = interaction.options.getUser('user').id;
+    const user = interaction.options.getUser('user');
     const data = await fs.promises.readFile(modlogsPath, 'utf-8');
-    logs = JSON.parse(data);
+    modlogs = JSON.parse(data);
     
-    const cases = Object.keys(logs[id]);
+    const cases = modlogs[user.id] ? Object.keys(modlogs[user.id]) : null;
 
     if(!cases || cases.length === 0) {
       await interaction.editReply('👉 | No mod logs found.');
@@ -33,9 +33,10 @@ module.exports = {
 
     let res = '';
     for(let i = cases.length - 1; i > -1; i--){
-      res += `● __${ms(Date.now() - Number(logs[id][cases[i]].issued), { long: true })} ago__: ${logs[id][cases[i]].mod} issued a ${logs[id][cases[i]].type} (\`${logs[id][cases[i]].caseId}\`) for \`${logs[id][cases[i]].reason}\`.\n`;
+      const user_cases = modlogs[user.id][cases[i]]
+      res += `● __${ms(Date.now() - Number(user_cases.issued), { long: true })} ago__: ${user_cases.mod} issued a ${user_cases.type} (\`${user_cases.caseId}\`) for \`${user_cases.reason}\`.\n`;
     }
 
-    await interaction.editReply(`> 🔨 | Found ${cases.length} logs:\n\n` + res);
+    await interaction.editReply(`> 🔨 | Found ${cases.length} logs:\n` + res);
   }
 }
