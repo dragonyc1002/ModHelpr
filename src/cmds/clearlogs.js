@@ -4,6 +4,8 @@ const path = require('path');
 
 const modlogsPath = path.join(__dirname, '../data/modlogs.json');
 
+const { cmdres } = require('../data/constants.json');
+
 const { modEmbed } = require('../utils/EmbedManager');
 const { modlogger } = require('../utils/WebhookManager');
 
@@ -29,16 +31,19 @@ module.exports = {
 
     const user = interaction.options.getUser('user');
     const reason = interaction.options.getString('reason');
+
+    if (user.bot) return interaction.editReply(cmdres.isBot);
   
     let modlogs = {};
     const data = await fs.promises.readFile(modlogsPath, 'utf-8');
     modlogs = JSON.parse(data);
 
-    if (!modlogs[user.id]) {
-      await interaction.editReply(`
-        ⚠️ | Target is not in the database. This is likely due to they have not been taken against logged action in the past.`);
-      return;
+    function no_modlogs(modlogobj) {
+      return Object.keys(modlogobj).length === 0;
     }
+    if (!modlogs[user.id] || no_modlogs(modlogs[user.id])) return interaction.editReply(`
+      ⚠️ | Target does not have any modlogs in the database.
+    `);
 
     modlogs[user.id] = {};
 
