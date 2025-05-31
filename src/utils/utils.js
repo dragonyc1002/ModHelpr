@@ -1,6 +1,6 @@
 /**
  * Useful utilities for the bot
- *  - generateCaseId: used to create mod case ID after the prefix i.e. 1e58dee
+ *  - generateCaseId(): used to create mod case ID after the prefix i.e. 1e58dee
  *  - [function name]: [purpose of function] (for future references in case new utlities are added)
  * **/
 
