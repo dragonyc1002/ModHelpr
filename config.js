@@ -15,7 +15,8 @@ if(!env.botAdmins) throw new Error('Bot administrator not configured.');
 module.exports = {
   bot: {
     id: env.id,
-    token: env.token
+    token: env.token,
+    prefix: 'm.'
   },
   botloggerprops: {
     id: env.botloggerId,
