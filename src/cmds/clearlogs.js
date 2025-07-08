@@ -6,8 +6,8 @@ const modlogsPath = path.join(__dirname, '../data/modlogs.json');
 
 const { cmdres } = require('../data/constants.json');
 
-const { modEmbed } = require('../utils/EmbedManager');
-const { modlogger } = require('../utils/WebhookManager');
+const { newModEmbed } = require('../utils/embeds');
+const { modlogger } = require('../utils/webhooks');
 
 const clearlogs = new SlashCommandBuilder()
   .setName('clearlogs')
@@ -52,11 +52,11 @@ module.exports = {
 
     modlogger.send({
       embeds: [
-        modEmbed({
+        newModEmbed({
           action: 'Cleared Log',
           target: user,
           reason: reason ?? 'No reason given.',
-          mod:interaction.user.username
+          moderator:interaction.user
         })
       ]
     });
