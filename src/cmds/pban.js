@@ -45,7 +45,8 @@ module.exports = {
     if(!member) return interaction.editReply(cmdres.notInGuild);
     if(member.bot) return interaction.editReply(cmdres.isBot); 
     if(member.id === interaction.user.id) return interaction.editReply('🤦');
-
+    if(!member.moderatable) return interaction.editReply(cmdres.cannotModerate);
+    
     const caseId = `MOD-P${generateCaseId(7)}`;
 
     await member.send(`⚠️ | You have been **permanently banned** from **${interaction.guild.name}**.\nℹ️ | Reason: \`${reason}\`\n🔨 | Your moderation case ID: \`${caseId}\``);
