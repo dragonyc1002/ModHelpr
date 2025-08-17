@@ -1,0 +1,9 @@
+{
+	"cmdres": {
+		"notInGuild": "❌ | Target is not in the guild.",
+    "notBanned": "❌ | This user is not banned.",
+    "incorrectDuration": "❌ | Incorrect format of the duration. Please make sure the duration is followed by the format for example \\`5d\\`",
+    "isBot": "❌ | Target is a bot.",
+    "cannotModerate": "❌ | Unable to moderate this member."
+  }
+}
