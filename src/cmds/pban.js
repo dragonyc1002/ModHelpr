@@ -42,8 +42,9 @@ module.exports = {
     const deletemsg = interaction.options.getNumber('deletemsg')*86400 ?? null;
 
     const member = interaction.guild.members.cache.get(user.id);
-
     if(!member) return interaction.editReply(cmdres.notInGuild);
+    if(member.bot) return interaction.editReply(cmdres.isBot); 
+    if(member.id === interaction.user.id) return interaction.editReply('🤦');
 
     const caseId = `MOD-P${generateCaseId(7)}`;
 
