@@ -20,7 +20,7 @@
  *
  */
 
-- v1.0.0 @ 20252808
+- v1.0.0 @ 2025-08-28
   - Creating the project
   - Basic structures
   - Adding new commands
