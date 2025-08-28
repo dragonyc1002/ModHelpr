@@ -2,3 +2,7 @@
 node_modules
 yarn.lock
 guidelines
+
+src/cmds/remove
+src/cmds/server
+src/cmds/user
