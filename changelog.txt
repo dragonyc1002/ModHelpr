@@ -1,0 +1,41 @@
+/************************************************************
+ ************************************************************
+ **********  Project Name : ModHelpr               **********
+ **********  Author       : dragonyc1002           **********
+ **********  License      : BSD-3 Clause           **********
+ **********  Version      : 1.0.0                  **********
+ **********  Release Date : 2025-08-28             **********
+ ************************************************************
+ ************************************************************/
+
+ /*
+ *
+ * Copyright (C) 2025 dragonyc1002 <https://github.com/dragonyc1002>.
+ *
+ * Modhelpr is an open source project. You can redistribute this project under BSD-3 Clause License.
+ *
+ * See more details of BSD-3 Clause License on the website <https://opensource.org/license/bsd-3-clause>.
+ *
+ * This is a changelog of the repository. This document is updated when there is a new version released. 
+ *
+ */
+
+- v1.0.0 @ 20252808
+  - Creating the project
+  - Basic structures
+  - Adding new commands
+    - Application Commands
+      - clearlogs
+      - modlogs
+      - pban
+      - timeout
+      - unban
+      - warn
+    - Prefixed Commands
+      - reload
+  - Adding event handlers
+    - Client#interactionCreate
+    - Client#messageCreate
+    - Client#ready
+  - Adding a JSON file as an example of a data format for Moderation Logs
+  - Enhanced way of managing Embeds by creating reusable functions
